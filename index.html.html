@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday</title>
+  <meta name="description" content="วันเกิดของคนสวยย">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&family=Sriracha&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#fff0f3; --bg2:#ffe4ec; --pink:#ff6b9a; --dark:#2e2a2a; --soft:#ffccda; --soft2:#ffd6e6; --white:#fff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--dark);
+      background: radial-gradient(1200px 800px at 80% -10%, var(--bg2), transparent 60%),
+                  radial-gradient(1200px 800px at -10% 20%, var(--bg1), transparent 60%),
+                  linear-gradient(180deg, #fff, var(--bg1));
+      font-family: 'Kanit', system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      overflow-x:hidden;
+    }
+    .container{max-width:1000px; margin:0 auto; padding:24px}
+    header{
+      position:relative; overflow:hidden; border-radius:28px; padding:48px 24px; text-align:center;
+      background: linear-gradient(135deg, #ffe9f1, #fff), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22><g fill=%22%23ffe1ec%22 opacity=%220.6%22><circle cx=%2280%22 cy=%2290%22 r=%2240%22/><circle cx=%22330%22 cy=%22120%22 r=%2240%22/></g></svg>');
+      box-shadow: 0 20px 60px rgba(255, 107, 154, 0.15);
+    }
+    .badge{display:inline-block; padding:8px 14px; border-radius:999px; background:var(--soft2); color:#b2456a; font-size:14px; letter-spacing:.3px}
+    h1{font-family:'Sriracha', 'Kanit', cursive; font-size: clamp(36px, 6vw, 72px); margin:14px 0 8px; color:#e6407a}
+    .subtitle{font-size: clamp(16px, 2.4vw, 22px); opacity:.85}
+    .heartline{display:flex; justify-content:center; gap:10px; margin:18px 0}
+    .heart{width:20px; height:20px; position:relative}
+    .heart::before, .heart::after{
+      content:""; position:absolute; width:10px; height:16px; background:var(--pink); border-radius:10px 10px 0 0; transform-origin:bottom; top:2px;
+      box-shadow:0 6px 14px rgba(230,64,122,.2)
+    }
+    .heart::before{left:7px; transform:rotate(-45deg)}
+    .heart::after{left:0; transform:rotate(45deg)}
+
+    .card{background:var(--white); border-radius:24px; padding:24px; box-shadow: 0 12px 32px rgba(0,0,0,.06)}
+    .grid{display:grid; gap:18px}
+    @media(min-width:860px){ .grid{ grid-template-columns: 1.1fr .9fr } }
+
+    .typewriter{ min-height:140px; font-size: clamp(18px, 2.2vw, 22px); line-height:1.6 }
+    .btn{ display:inline-flex; align-items:center; gap:10px; padding:14px 18px; border-radius:16px; background:var(--pink); color:white; border:none; cursor:pointer; font-weight:700; transition: transform .12s ease, box-shadow .2s ease; box-shadow:0 10px 24px rgba(255,107,154,.35) }
+    .btn:hover{ transform: translateY(-2px) }
+
+    .gallery{ display:grid; grid-template-columns:repeat(12, 1fr); gap:12px }
+    .gallery img{ width:100%; height:100%; object-fit:cover; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,.12) }
+    .gallery .g1{ grid-column: span 7 }
+    .gallery .g2{ grid-column: span 5 }
+    .gallery .g3{ grid-column: span 5 }
+    .gallery .g4{ grid-column: span 7 }
+    @media(max-width:680px){ .gallery .g1,.gallery .g2,.gallery .g3,.gallery .g4{ grid-column: span 12 } }
+
+    .quote{ font-size:clamp(18px,2.4vw,22px); padding:22px; border-radius:20px; background:linear-gradient(180deg, #fff6fa, #fff); border:1px dashed #ffc2d8; color:#b2456a }
+
+    footer{ text-align:center; padding:28px 10px; color:#a96; opacity:.9 }
+
+    /* Floating heart particles */
+    .floating-heart{ position:fixed; left:var(--x); top:var(--y); width:14px; height:14px; pointer-events:none; animation: floatUp 2.2s ease-out forwards; }
+    .floating-heart::before, .floating-heart::after{ content:""; position:absolute; width:8px; height:12px; background:rgba(255,107,154,.85); border-radius:8px 8px 0 0; top:2px }
+    .floating-heart::before{ left:3px; transform:rotate(-45deg) }
+    .floating-heart::after{ left:-3px; transform:rotate(45deg) }
+    @keyframes floatUp{ to{ transform:translateY(-120px) scale(1.2); opacity:0 } }
+
+    /* Reveal letter */
+    details{ border-radius:18px; background:#fff; box-shadow:0 10px 28px rgba(0,0,0,.06); overflow:hidden }
+    summary{ list-style:none; cursor:pointer; padding:18px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(90deg,#ffe8f1,#fff) }
+    summary::-webkit-details-marker{ display:none }
+    .letter{ padding:22px; border-top:1px solid #ffe0ed; line-height:1.8 }
+
+    /* Subtle pulse */
+    .pulse{ box-shadow:0 0 0 0 rgba(255,107,154,.5); animation:pulse 2s infinite }
+    @keyframes pulse{ 70%{ box-shadow:0 0 0 14px rgba(255,107,154,0) } 100%{ box-shadow:0 0 0 0 rgba(255,107,154,0) } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">🎂Happy Birthday</div>
+      <h1>HAPPY BIRTHDAY<span id="name">คุณกัญญาพร</span>💖</h1>
+      <div class="subtitle">กัญญาพรเกิดมา 18 ปีแล้วววว </div>
+      <div class="heartline" aria-hidden="true">
+        <div class="heart"></div><div class="heart"></div><div class="heart"></div><div class="heart"></div>
+      </div>
+      <button class="btn pulse" id="musicBtn">▶️ กดปุ่มนี้หน่อย</button>
+      <audio id="bgm" src="song.mp3" preload="auto"></audio>
+    </header>
+
+    <section class="grid" style="margin-top:22px">
+      <div class="card">
+        <h2 style="margin:4px 0 12px; color:#e6407a">จดหมาย</h2>
+        <div id="typewriter" class="typewriter"></div>
+        <details style="margin-top:10px">
+          <summary>💌 กดเปิดตรงนี้ๆ</summary>
+          <div class="letter" id="longLetter">
+            ถึง <b id="name2"></b>,<br>
+            สุขสันต์วันเกิดนะเธอ เธอเป็นหญิงเก่งอะไม่รู้จะอวยพรอะไรดีเลย555555 งั้นขอมีความสุขมากๆนะ 18 นี้เค้าขอให้เธอมีไม่มีเรื่องเครียดมีแต่ความสุขเต็มไปด้วยรอยยิ้มทุกวินาที ฝันอะไรขอให้เป็นจริงหวังอะไรขอให้ได้อย่างสมปราถนาสอบก็ขอให้สอบได้เกรดสูงๆไปเล๊ย เรื่องมหาลัยอันนี้สำคัญเข้ารู้ว่าเธอตั้งใจเธอทำได้แน่นอนอยู่แล้วเค้าไม่กังวลในตัวเธอเลยเพราะงั้นเธอก็อย่ากดดันตัวเองมากไปนะเค้าเป็นห่วงสุดๆเลย เค้ายังรักเธอเหมือนนวันแรกที่เค้ารักเลยนะรู้ไหมขอให้เค้าได้อยู่แฮปเธอไปแบบนี้นานๆทุกปีเลยน้าาา ❤️
+          </div>
+        </details>
+      </div>
+
+      <div class="card">
+        <h2 style="margin:4px 0 12px; color:#e6407a">WE PICTURE</h2>
+        <div class="gallery">
+          <img class="g1" src="images/1.jpg" alt="รูปคู่ 1" onerror="this.src='https://images.unsplash.com/photo-1517602302552-471fe67acf66?q=80&w=1200&auto=format&fit=crop'">
+          <img class="g2" src="images/2.jpg" alt="รูปคู่ 2" onerror="this.src='https://images.unsplash.com/photo-1520975922284-9ce37bd9d03f?q=80&w=1200&auto=format&fit=crop'">
+          <img class="g3" src="images/3.jpg" alt="รูปคู่ 3" onerror="this.src='https://images.unsplash.com/photo-1519255122284-c3acd66be602?q=80&w=1200&auto=format&fit=crop'">
+          <video class="g4" width=150" height="200" autoplay muted loop>
+            <source src="images/4.mp4" type="video/mp4">
+            วิดีโอของคุณไม่รองรับเบราว์เซอร์นี้
+          </video>
+        </div>
+        <p class="quote" style="margin-top:12px">“มีรูปน้อยแต่ก็ยังมีนะ”</p>
+      </div>
+    </section>
+
+    <!-- <section class="card" style="margin-top:18px">
+      <h2 style="margin:4px 0 12px; color:#e6407a">คำอวยพรวันเกิด</h2>
+      <ul style="margin:0; padding-left:18px; line-height:1.9">
+        <li>สุขภาพแข็งแรง สดใสในทุกเช้า</li>
+        <li>งานราบรื่น สมหวังในสิ่งที่ตั้งใจ</li>
+        <li>มีแต่คนดีและพลังงานดี ๆ รายล้อม</li>
+        <li>รักของเราหวานละมุนขึ้นทุกปี 💗</li>
+      </ul>
+    </section> -->
+
+    <footer>งานนี้เค้าทำด้วยจายย ▪︎ <span id="maker">ME</span> ▪︎ <span id="year"></span></footer>
+  </div>
+
+  <script>
+    // ====== ตั้งค่าได้ง่าย ๆ ตรงนี้ ======
+    const CONFIG = {
+      name: "คุณกัญญาพร",        // ชื่อแฟน
+      maker: "ปณิธาน ทำเอง+แชทค้าบบ",     // ผู้จัดทำ
+      birthdayText: "สุขสันต์วันเกิดนะคนเก่งของเรา ขอให้วันนี้เต็มไปด้วยความสุขและความฝันที่เป็นจริงทุกอย่างเลยนะก่อนกดจดหมายพนมมือให้พร้อมเตรียมรับพรนะ อะหยอกเล่นนเค้ารักเธอที่สุดเลยยยย💕",
+      longLetter: `เค้าภูมิใจในตัวเธอเสมอเค้าจะคอยอยู่ข้างๆในวันที่สดใสและวันที่เหนื่อย ❤`,
+      autoMusic: false,     // ถ้าอยากให้เพลงเล่นเองเมื่อเปิดเว็บ ให้เป็น true (บางเบราว์เซอร์อาจบล็อก)
+      musicSrc: "song.mp3"  // ใส่ไฟล์เพลงของคู่เรา (วางไฟล์ไว้โฟลเดอร์เดียวกับไฟล์นี้)
+    };
+
+    // ====== ใส่ข้อความ/ชื่อ ======
+    document.getElementById('name').textContent = CONFIG.name;
+    document.getElementById('maker').textContent = CONFIG.maker;
+    document.getElementById('longLetter').childNodes[0].textContent = `ถึง ${CONFIG.name},`;
+    const bgm = document.getElementById('bgm');
+    bgm.src = CONFIG.musicSrc;
+
+    // ====== Typewriter effect ======
+    const tw = document.getElementById('typewriter');
+    const text = CONFIG.birthdayText;
+    let i = 0;
+    const speed = 28;
+    const typer = () => {
+      if(i <= text.length){
+        tw.innerHTML = text.slice(0, i) + '<span style="opacity:.5">|</span>';
+        i++;
+        setTimeout(typer, speed);
+      } else {
+        tw.innerHTML = text; // จบแล้วเอาเคอร์เซอร์ออก
+      }
+    }
+    typer();
+
+    // ====== Music controls ======
+    const btn = document.getElementById('musicBtn');
+    btn.addEventListener('click', async () => {
+      if(bgm.paused){ await bgm.play(); btn.textContent = '⏸️ STOP MUSIC'; btn.classList.remove('pulse') }
+      else { bgm.pause(); btn.textContent = '▶️ PRESS TO LISTEN' }
+    });
+    if(CONFIG.autoMusic){ bgm.play().catch(()=>{}) }
+
+    // ====== Floating hearts on click/move ======
+    const spawnHeart = (x,y) => {
+      const h = document.createElement('div');
+      h.className = 'floating-heart';
+      h.style.left = x+'px'; h.style.top = y+'px';
+      document.body.appendChild(h);
+      setTimeout(()=> h.remove(), 2200);
+    }
+    window.addEventListener('click', e => spawnHeart(e.clientX, e.clientY));
+    window.addEventListener('mousemove', (e)=>{
+      if(Math.random() < .02) spawnHeart(e.clientX+Math.random()*8, e.clientY+Math.random()*8)
+    });
+
+    // ====== Year ======
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
